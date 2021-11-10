@@ -1,9 +1,9 @@
 <?php
 
-require_once __DIR__ . '/../../config/database.php';
-require_once __DIR__ . '/../../includes/header.php';
+require_once (__DIR__ . '/../../config/database.php');
+require_once (__DIR__ . '/../../includes/header.php');
 
-$sql = $pdo->query("SELECT title, `file` FROM `item`");
+$sql = $pdo->query("SELECT `title`, `file`, `id` FROM `item`");
 
 $rows = $sql->fetchAll(PDO::FETCH_ASSOC);
 
@@ -19,7 +19,7 @@ $rows = $sql->fetchAll(PDO::FETCH_ASSOC);
                     <div class="col-md-4">
                         <div class="card mb-4">
                             <img src="<?= $row['file']; ?>" alt="" class="img-fluid">
-                            <h3 class="card-title text-center"><?= $row['title'] ?></h3>
+                            <a href="/divers/mini-projet-php-mysql/src/product/show.php?id=<?= $row['id'] ?>"><h3 class="card-title text-center"><?= $row['title'] ?></h3></a>
                         </div>
                     </div>
                 <?php endforeach ?>
