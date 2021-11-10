@@ -3,6 +3,10 @@
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../includes/header.php';
 
+$pdoStatement = $pdo->query('SELECT `id`, `name` FROM `category`');
+
+$rows = $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <main>
@@ -14,6 +18,15 @@ require_once __DIR__ . '/../../includes/header.php';
                     <div class="form-group">
                         <label for="name">Nom</label>
                         <input type="text" class="form-control" id="name" placeholder="Nom du produit">
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Catégories</label>
+                        <select class="form-control" name="category" id="category">
+                            <option selected>Sélectionner une catégorie</option>
+                            <?php foreach($rows as $row) : ?>
+                                <option value="<?= $row['id'] ?>"><?= $row['name'] ?></option>
+                            <?php endforeach ?>
+                        </select>
                     </div>
                     <div class="form-group">
                     <div class="form-group">
