@@ -24,6 +24,7 @@ $rows = $sql->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                 <?php endforeach ?>
             </div>
+            <a href="/divers/mini-projet-php-mysql/src/product/new.php" class="btn btn-primary">Ajout d'un Produit</a>
         </div>
     </div>
 </main>

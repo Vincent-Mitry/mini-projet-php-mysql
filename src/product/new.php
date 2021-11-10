@@ -3,6 +3,42 @@
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../includes/header.php';
 
+var_dump($_POST);
+
+if($_POST){
+
+    // $filename = '';
+    
+    // if(!empty($_FILES['file'])){
+    
+    //     $targetDirectory = "../../uploads/";
+    //     $file = $_FILES['file']['name'];
+    
+    //     $path = pathinfo($file);
+    //     $filename = $path['filename'];
+    //     $ext = $path['extension'];
+    
+    //     $tmpName = $_FILES['file']['tmp_name'];
+    //     $path_filename_ext = $targetDirectory . $filename . '.' . $ext;
+    //     if(move_uploaded_file($tmpName, $path_filename_ext)){
+    //         $filename = $filename . '.' . $ext;
+    //     }
+    // }
+
+    $sql = "INSERT INTO `item` (title, description, duration, file, type, category_id)
+            VALUES (?,?,?,?,?,?)";
+
+    $a = $pdo->prepare($sql)->execute([
+        $_POST['title'],
+        $_POST['description'],
+        $_POST['duration'],
+        $_POST['file'],
+        $_POST['type'],
+        $_POST['category']
+    ]);
+}
+
+
 $pdoStatement = $pdo->query('SELECT `id`, `name` FROM `category`');
 
 $rows = $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
@@ -16,8 +52,16 @@ $rows = $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
                 <!-- use multipart/form-data when your form includes any <input type="file"> elements -->
                 <form method="post" enctype="multipart/form-data" action="">
                     <div class="form-group">
-                        <label for="name">Nom</label>
-                        <input type="text" class="form-control" id="name" placeholder="Nom du produit">
+                        <label for="title">Titre</label>
+                        <input type="text" class="form-control" name="title" id="title" placeholder="Nom du produit">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea type="text" class="form-control" name="description" id="description" placeholder="Description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="duration">Durée</label>
+                        <input type="text" class="form-control" name="duration" id="duration" placeholder="Durée">
                     </div>
                     <div class="form-group">
                         <label for="category">Catégories</label>
@@ -29,9 +73,17 @@ $rows = $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="type">Type</label>
+                        <select class="form-control" name="type" id="type">
+                            <option selected>Sélectionner un type</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                     <div class="form-group">
                         <label for="file">Fichier</label>
-                        <input type="file" class="form-control-file" id="file">
+                        <input type="text" class="form-control-file" name="file" id="file">
                     </div>
                     <button type="submit" class="btn btn-primary">Valider</button>
                 </form> 
