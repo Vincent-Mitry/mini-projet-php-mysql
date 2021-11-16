@@ -72,15 +72,14 @@ if ($_GET){
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="type">Type</label>
-                        <select class="form-control" name="type" id="type">
-                            <option selected><?= ($item['type']) ?></option>
-                            <?php if($item['type'] == 1) : ?>
-                                <option value='2'>2</option>
-                            <?php else : ?>
-                                <option value='1'>1</option>
-                            <?php endif ?>
-                        </select>
+                        <div>
+                            <input type="radio" id="type1" name="type" value="1" <?= ($item['type'] == 1) ? "checked" : '' ?>>
+                            <label for="type1">Film</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="type2" name="type" value="2" <?= ($item['type'] == 2) ? "checked" : '' ?>>
+                            <label for="type2">Série</label>
+                        </div> 
                     </div>
                     <div class="form-group">
                     <div class="form-group">

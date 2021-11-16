@@ -73,12 +73,14 @@ $rows = $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="type">Type</label>
-                        <select class="form-control" name="type" id="type">
-                            <option selected>Sélectionner un type</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                        </select>
+                        <div>
+                            <input type="radio" id="type1" name="type" value="1">
+                            <label for="type1">Film</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="type2" name="type" value="2">
+                            <label for="type2">Série</label>
+                        </div> 
                     </div>
                     <div class="form-group">
                     <div class="form-group">
