@@ -20,6 +20,7 @@ if($_GET){
             <div class="row">
                 <h3><?= $row['title'] ?></h3>
                 <div>
+                    <a href="/divers/mini-projet-php-mysql/src/product/edit.php?id=<?= $row['id'] ?>" class="btn btn-warning">Modifier</a>
                     <a href="/divers/mini-projet-php-mysql/src/product/delete.php?id=<?= $row['id'] ?>" class="btn btn-danger">Supprimer</a>
                 </div>
             </div>
