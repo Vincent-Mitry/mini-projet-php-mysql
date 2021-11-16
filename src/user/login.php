@@ -26,7 +26,7 @@ require_once __DIR__ . '/../../includes/header.php';
     <div class="py-5 bg-light">
         <div class="container">
             <div class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content">
-                <h1>Création de compte</h1>
+                <h1>Connexion</h1>
                 <form method="post" action="">
                     <div class="form-group">
                         <label for="email">Email</label>
