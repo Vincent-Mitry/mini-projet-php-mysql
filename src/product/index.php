@@ -34,15 +34,16 @@ $categories = $pdoStatement2->fetchAll(PDO::FETCH_ASSOC);
                     <div class="md-form mt-0">
                         <input type="text" class="form-control" name="title" placeholder="Recherche" aria-label="Recherche" value="<?= isset($_GET['title']) ? $_GET['title'] : "" ?>">
                         <select class="form-control" name="category" id="category">
+                            <option selected>Sélectionner une catégorie</option>
                             <?php foreach($categories as $category) : ?>
                                 <option <?php if(isset($_GET['category'])){
-                                    echo ($_GET['category'] == $category['id']) ? "selected" : '' ?> value="<?= $category['id'] ?>"><?= $category['name'];
-                                }?></option>
+                                    echo ($_GET['category'] == $category['id']) ? "selected" : '';
+                                } ?> value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
                             <?php endforeach ?>
                         </select>
                         <label>
-                                <input type="radio" id="type1" name="type" value="1" <?php if(isset($_GET['type'])){
-                                    echo ($_GET['type'] == 1) ? "checked" : '';
+                                <input type="radio" id="type1" name="type" value="1" checked<?php if(isset($_GET['type'])){
+                                    echo ($_GET['type'] == 1) ? "" : 'checked';
                                 } ?>>
                                 Film
                             </label>
