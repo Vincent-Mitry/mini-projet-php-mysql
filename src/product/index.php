@@ -32,18 +32,24 @@ $categories = $pdoStatement2->fetchAll(PDO::FETCH_ASSOC);
             <div class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content">
                 <form methode="get" class="col-md-6">
                     <div class="md-form mt-0">
-                        <input type="text" class="form-control" name="title" placeholder="Recherche" aria-label="Recherche" value="<?= $_GET['title'] ?>">
+                        <input type="text" class="form-control" name="title" placeholder="Recherche" aria-label="Recherche" value="<?= isset($_GET['title']) ? $_GET['title'] : "" ?>">
                         <select class="form-control" name="category" id="category">
                             <?php foreach($categories as $category) : ?>
-                                <option <?= ($_GET['category'] == $category['id']) ? "selected" : '' ?> value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
+                                <option <?php if(isset($_GET['category'])){
+                                    echo ($_GET['category'] == $category['id']) ? "selected" : '' ?> value="<?= $category['id'] ?>"><?= $category['name'];
+                                }?></option>
                             <?php endforeach ?>
                         </select>
                         <label>
-                                <input type="radio" id="type1" name="type" value="1" <?= ($_GET['type'] == 1) ? "checked" : '' ?>>
+                                <input type="radio" id="type1" name="type" value="1" <?php if(isset($_GET['type'])){
+                                    echo ($_GET['type'] == 1) ? "checked" : '';
+                                } ?>>
                                 Film
                             </label>
                             <label>
-                                <input type="radio" id="type2" name="type" value="2" <?= ($_GET['type'] == 2) ? "checked" : '' ?>>
+                                <input type="radio" id="type2" name="type" value="2" <?php if(isset($_GET['type'])){
+                                    echo ($_GET['type'] == 2) ? "checked" : '';
+                                } ?>>
                                 Série
                         </label>
                         <button type="submit">Valider</button>
@@ -58,6 +64,7 @@ $categories = $pdoStatement2->fetchAll(PDO::FETCH_ASSOC);
                             <th scope="col">Type</th>
                             <th scope="col">Title</th>
                             <th scope="col">Description</th>
+                            <th scope="col">Note</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,6 +74,7 @@ $categories = $pdoStatement2->fetchAll(PDO::FETCH_ASSOC);
                             <td><?= ($row['type'] == 1) ? "Film" : "Série" ?></td>
                             <td><?= $row['title'] ?></td>
                             <td><?= $row['description'] ?></td>
+                            <td><a href="/divers/mini-projet-php-mysql/src/product/note.php?id=<?= $row['id'] ?>" class="btn btn-primary">Noter</a></td>
                         </tr>
                     <?php endforeach ?>    
                     </tbody>
