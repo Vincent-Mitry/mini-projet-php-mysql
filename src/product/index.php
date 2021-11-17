@@ -6,7 +6,7 @@ require_once (__DIR__ . '/../../includes/header.php');
 $rows=[];
 if($_GET){
 
-    $pdoStatement = $pdo->prepare("SELECT * FROM `item` WHERE `title` LIKE ? AND `type` = ? AND `category_id` = ?");
+    $pdoStatement = $pdo->prepare("SELECT `i`.*, ROUND(AVG(`n`.`note`), 1) AS `avg_note` FROM `item` as `i` LEFT JOIN `note` as `n` ON `i`.`id` = `n`.`item_id` WHERE `i`.`title` LIKE ? AND `i`.`type` = ? AND `i`.`category_id` = ? GROUP BY `i`.`id`");
     $pdoStatement->bindValue(1, '%' . $_GET['title'] . '%');
     $pdoStatement->bindValue(2, $_GET['type']);
     $pdoStatement->bindValue(3, $_GET['category']);
@@ -14,7 +14,7 @@ if($_GET){
 
     $rows = $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
 } else {
-    $pdoStatement = $pdo->query("SELECT * FROM `item`");
+    $pdoStatement = $pdo->query("SELECT `i`.*, ROUND(AVG(`n`.`note`), 1) AS `avg_note` FROM `item` as `i` LEFT JOIN `note` as `n` ON `i`.`id` = `n`.`item_id` GROUP BY `i`.`id`");
     $rows = $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
 }
 
@@ -66,6 +66,7 @@ $categories = $pdoStatement2->fetchAll(PDO::FETCH_ASSOC);
                             <th scope="col">Title</th>
                             <th scope="col">Description</th>
                             <th scope="col">Note</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -75,6 +76,7 @@ $categories = $pdoStatement2->fetchAll(PDO::FETCH_ASSOC);
                             <td><?= ($row['type'] == 1) ? "Film" : "Série" ?></td>
                             <td><?= $row['title'] ?></td>
                             <td><?= $row['description'] ?></td>
+                            <td><?= isset($row['avg_note']) ? $row['avg_note'] : 'N/A' ?></td>
                             <td><a href="/divers/mini-projet-php-mysql/src/product/note.php?id=<?= $row['id'] ?>" class="btn btn-primary">Noter</a></td>
                         </tr>
                     <?php endforeach ?>    
