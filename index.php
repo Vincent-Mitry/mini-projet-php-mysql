@@ -21,6 +21,9 @@ require_once __DIR__ . '/includes/header.php';
                     <a href="/divers/mini-projet-php-mysql/src/user/login.php" class="btn btn-primary">Connexion</a>
                 </div>
                 <?php } ?>
+                <div>
+                    <a href="/divers/mini-projet-php-mysql/src/product/random.php" class="btn btn-primary">Random</a>
+                </div>
             </div>
         </div>
     </div>

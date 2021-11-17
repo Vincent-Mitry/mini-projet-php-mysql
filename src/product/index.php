@@ -70,9 +70,9 @@ $categories = $pdoStatement2->fetchAll(PDO::FETCH_ASSOC);
                         </tr>
                     </thead>
                     <tbody>
-                    <?php $i=1; foreach($rows as $row): ?>
+                    <?php foreach($rows as $row): ?>
                         <tr>
-                            <th scope="row"><?=$i++?></th>
+                            <th scope="row"><?= $row['id'] ?></th>
                             <td><?= ($row['type'] == 1) ? "Film" : "Série" ?></td>
                             <td><?= $row['title'] ?></td>
                             <td><?= $row['description'] ?></td>
