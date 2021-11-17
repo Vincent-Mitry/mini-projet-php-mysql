@@ -6,9 +6,9 @@ var_dump($_GET['id']);
 
 if($_POST){
 
-    $sql = "INSERT INTO `note` (user_id, item_id, note) VALUES (?,?,?)";
+    $sql = "INSERT INTO `note` (user_id, item_id, note, comment) VALUES (?,?,?,?)";
     
-    $pdo->prepare($sql)->execute([$_SESSION['user_id'], $_GET['id'], $_POST['note']]);
+    $pdo->prepare($sql)->execute([$_SESSION['user_id'], $_GET['id'], strip_tags($_POST['note']), strip_tags($_POST['comment'])]);
     header("Location:../product/index.php");
     exit();
 }
@@ -27,6 +27,10 @@ require_once (__DIR__ . '/../../includes/header.php');
                     <div class="form-group">
                         <label for="note">Note</label>
                         <input type="number" max="5" min="0" class="form-control" name="note" id="note">
+                    </div>
+                    <div class="form-group">
+                        <label for="comment">Commentaire</label>
+                        <input type="text" class="form-control" name="comment" id="comment">
                     </div>
                     <button type="submit" class="btn btn-primary">Valider</button>
                 </form>

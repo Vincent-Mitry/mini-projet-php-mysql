@@ -66,7 +66,7 @@ $categories = $pdoStatement2->fetchAll(PDO::FETCH_ASSOC);
                             <th scope="col">Title</th>
                             <th scope="col">Description</th>
                             <th scope="col">Note</th>
-                            <th scope="col">Action</th>
+                            <th scope="col" colspan="2">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,6 +78,7 @@ $categories = $pdoStatement2->fetchAll(PDO::FETCH_ASSOC);
                             <td><?= $row['description'] ?></td>
                             <td><?= isset($row['avg_note']) ? $row['avg_note'] : 'N/A' ?></td>
                             <td><a href="/divers/mini-projet-php-mysql/src/product/note.php?id=<?= $row['id'] ?>" class="btn btn-primary">Noter</a></td>
+                            <td><a href="/divers/mini-projet-php-mysql/src/product/show.php?id=<?= $row['id'] ?>" class="btn btn-primary">Voir</a></td>
                         </tr>
                     <?php endforeach ?>    
                     </tbody>
