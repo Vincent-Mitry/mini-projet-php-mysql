@@ -3,9 +3,24 @@
 require_once (__DIR__ . '/../../config/database.php');
 require_once (__DIR__ . '/../../includes/header.php');
 
-$sql = $pdo->query("SELECT * FROM `item`");
+$rows=[];
+if($_GET){
 
-$rows = $sql->fetchAll(PDO::FETCH_ASSOC);
+    $pdoStatement = $pdo->prepare("SELECT * FROM `item` WHERE `title` LIKE ? AND `type` = ? AND `category_id` = ?");
+    $pdoStatement->bindValue(1, '%' . $_GET['title'] . '%');
+    $pdoStatement->bindValue(2, $_GET['type']);
+    $pdoStatement->bindValue(3, $_GET['category']);
+    $pdoStatement->execute();
+
+    $rows = $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $pdoStatement = $pdo->query("SELECT * FROM `item`");
+    $rows = $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+$pdoStatement2 = $pdo->query("SELECT `id`, `name` FROM `category`");
+$categories = $pdoStatement2->fetchAll(PDO::FETCH_ASSOC);
 
 // var_dump($rows);
 
@@ -14,6 +29,27 @@ $rows = $sql->fetchAll(PDO::FETCH_ASSOC);
 <main>
     <div class="py-5 bg-light">
         <div class="container">
+            <div class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content">
+                <form methode="get" class="col-md-6">
+                    <div class="md-form mt-0">
+                        <input type="text" class="form-control" name="title" placeholder="Recherche" aria-label="Recherche" value="<?= $_GET['title'] ?>">
+                        <select class="form-control" name="category" id="category">
+                            <?php foreach($categories as $category) : ?>
+                                <option <?= ($_GET['category'] == $category['id']) ? "selected" : '' ?> value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
+                            <?php endforeach ?>
+                        </select>
+                        <label>
+                                <input type="radio" id="type1" name="type" value="1" <?= ($_GET['type'] == 1) ? "checked" : '' ?>>
+                                Film
+                            </label>
+                            <label>
+                                <input type="radio" id="type2" name="type" value="2" <?= ($_GET['type'] == 2) ? "checked" : '' ?>>
+                                Série
+                        </label>
+                        <button type="submit">Valider</button>
+                    </div>
+                </form>
+            </div>
             <div class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content">
                 <table class="table">
                     <thead>
