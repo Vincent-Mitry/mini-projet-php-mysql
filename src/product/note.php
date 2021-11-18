@@ -26,11 +26,11 @@ require_once (__DIR__ . '/../../includes/header.php');
                 <form method="post" action="">
                     <div class="form-group">
                         <label for="note">Note</label>
-                        <input type="number" max="5" min="0" class="form-control" name="note" id="note">
+                        <input type="number" max="5" min="0" class="form-control" name="note" id="note" placeholder="Attribuer une note de 0 à 5">
                     </div>
                     <div class="form-group">
                         <label for="comment">Commentaire</label>
-                        <input type="text" class="form-control" name="comment" id="comment">
+                        <input type="text" class="form-control" name="comment" id="comment" placeholder="Commentaire Optionnel">
                     </div>
                     <button type="submit" class="btn btn-primary">Valider</button>
                 </form>

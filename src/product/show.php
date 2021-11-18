@@ -3,13 +3,18 @@
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../includes/header.php';
 
-if($_GET){
-    $pdoStatement = $pdo->prepare("SELECT * FROM `item` WHERE id = ?");
-    $pdoStatement->bindValue(1, $_GET['id']);
-    $pdoStatement->execute();
+// On veut récupérer les données d'un item  à afficher sur la table  en récupérant l'id de l'item (passé en get)
+$pdoStatement = $pdo->prepare("SELECT `i`.*, ROUND(AVG(`n`.`note`), 1) AS `avg_note` FROM `item` as `i` LEFT JOIN `note` as `n` ON `i`.`id` = `n`.`item_id` WHERE `i`.`id` = ? ");
+$pdoStatement->bindValue(1, $_GET['id']);
+$pdoStatement->execute();
 
-    $row = $pdoStatement->fetch(PDO::FETCH_ASSOC);
-}
+$row = $pdoStatement->fetch(PDO::FETCH_ASSOC);
+
+$pdoStatement = $pdo->prepare("SELECT `n`.*, `u`.`email` FROM `note` as `n` INNER JOIN `user` as `u` ON `n`.`user_id` = `u`.`id` WHERE `item_id` = ?");
+$pdoStatement->bindValue(1, $_GET['id']);
+$pdoStatement->execute();
+
+$comments = $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
 
 
 ?>
@@ -30,14 +35,13 @@ if($_GET){
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Type</th>
-                            <th scope="col">Title</th>
+                            <th scope="col">Titre</th>
                             <th scope="col">Description</th>
                             <th scope="col">Note</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                    <?php foreach($rows as $row): ?>
                         <tr>
                             <th scope="row"><?= $row['id'] ?></th>
                             <td><?= ($row['type'] == 1) ? "Film" : "Série" ?></td>
@@ -46,7 +50,6 @@ if($_GET){
                             <td><?= isset($row['avg_note']) ? $row['avg_note'] : 'N/A' ?></td>
                             <td><a href="/divers/mini-projet-php-mysql/src/product/note.php?id=<?= $row['id'] ?>" class="btn btn-primary">Noter</a></td>
                         </tr>
-                    <?php endforeach ?>    
                     </tbody>
                 </table>
             </div>
@@ -55,18 +58,21 @@ if($_GET){
                     <table class="table">
                         <thead>
                         <tr>
-                            <th scope="col">User</th>
-                            <th scope="col">Comment</th>
+                            <th scope="col">Utilisateur</th>
+                            <th scope="col">Commentaire</th>
                             <th scope="col">Note</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($comments as $c) : ?>
-                        <tr>
-                            <td><?=$c['email']?></td>
-                            <td><?=$c['comment']?></td>
-                            <td><?=$c['note']?></td>
-                        </tr>
+                        <?php foreach ($comments as $comment) : ?>
+                            <?php if(!empty($comment['comment'])) : ?>
+                            <tr>
+                                <td><?=$comment['email']?></td>
+                                <td><?=$comment['comment']?></td>
+                                <td><?=$comment['note']?></td>
+                            </tr>
+                            <?php else : ?>
+                            <?php endif ?>
                         <?php endforeach ?>
                         </tbody>
                     </table>
